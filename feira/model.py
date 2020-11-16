@@ -15,7 +15,7 @@ class Feira(db.Model):
     bairro: str
     referencia: str
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     registro = db.Column(db.String(10), unique=True, nullable=False)
     nome = db.Column(db.String(80), unique=False, nullable=False)
     distrito = db.Column(db.String(80), nullable=False)

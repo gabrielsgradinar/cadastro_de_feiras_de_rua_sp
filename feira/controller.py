@@ -2,6 +2,7 @@ from werkzeug.exceptions import HTTPException
 from sqlalchemy import or_
 from model import Feira
 from db import db
+import csv
 
 
 class RegistroNaoPodeAtualizar(HTTPException):
@@ -73,7 +74,7 @@ def excluir_feira(registro: str):
     try:
         db.session.delete(feira_para_deletar)
         db.session.commit()
-        return jsonify(feira_para_deletar)
+        return feira_para_deletar
     except Exception as e:
         db.session.rollback()
         return e
@@ -96,4 +97,26 @@ def atualizar_feira(feira: dict, registro: str):
 
 
 def importar_csv(arquivo):
-    pass
+    with open(arquivo, 'r') as arquivo_csv:
+            # arquivo = '../DEINFO_AB_FEIRASLIVRES_2014.csv'
+            reader = csv.DictReader(arquivo_csv, delimiter=',')
+            contador = 0
+            feiras_importadas = []
+            for collumn in reader:
+                feira = Feira(
+                    registro=collumn["REGISTRO"],
+                    nome=collumn["NOME_FEIRA"],
+                    distrito=collumn["DISTRITO"],
+                    regiao=collumn["REGIAO5"],
+                    logradouro=collumn["LOGRADOURO"],
+                    numero=collumn["NUMERO"],
+                    bairro=collumn["BAIRRO"],
+                    referencia=collumn["REFERENCIA"],
+                )
+                feiras_importadas.append(feira)
+                contador += 1
+            
+            db.session.bulk_save_objects(feiras_importadas)
+            db.session.commit()
+            
+            return f'Foram importadas {contador} feira do arquivo {arquivo}'
