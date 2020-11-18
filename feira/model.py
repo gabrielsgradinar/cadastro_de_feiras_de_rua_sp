@@ -1,6 +1,7 @@
 from db import db
 from dataclasses import dataclass
 
+
 @dataclass
 class Feira(db.Model):
     __tablename__ = "feiras"

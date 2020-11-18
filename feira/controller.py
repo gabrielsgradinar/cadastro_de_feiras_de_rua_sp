@@ -1,21 +1,18 @@
-from werkzeug.exceptions import HTTPException
+from werkzeug.exceptions import BadRequest
 from sqlalchemy import or_
 from model import Feira
 from db import db
 import csv
 
 
-class RegistroNaoPodeAtualizar(HTTPException):
-    code = 400
-    description = "Registro não pode ser atualizado"
-
-
-class NenhumaFeiraParaExcluir(HTTPException):
-    code = 400
-    description = "Não existe nenhum feira com esse registro"
-
-
 def criar_feira(feira: Feira):
+    registro_existe = Feira.query.filter(
+        Feira.registro == feira["registro"]
+    ).first()
+
+    if registro_existe:
+        raise BadRequest("O registro da feira já existe")
+
     nova_feira = Feira(
         registro=feira["registro"],
         nome=feira["nome"],
@@ -69,7 +66,7 @@ def excluir_feira(registro: str):
     feira_para_deletar = Feira.query.filter(Feira.registro == registro).first()
 
     if not feira_para_deletar:
-        raise NenhumaFeiraParaExcluir()
+        raise BadRequest("Não existe nenhuma feira com esse registro")
 
     try:
         db.session.delete(feira_para_deletar)
@@ -83,7 +80,7 @@ def excluir_feira(registro: str):
 def atualizar_feira(feira: dict, registro: str):
     for chave in feira.keys():
         if chave == "registro":
-            raise RegistroNaoPodeAtualizar()
+            raise BadRequest("O campo Registro não pode ser atualizado")
 
     filtro = Feira.query.filter(Feira.registro == registro)
     try:
@@ -97,26 +94,26 @@ def atualizar_feira(feira: dict, registro: str):
 
 
 def importar_csv(arquivo):
-    with open(arquivo, 'r') as arquivo_csv:
-            # arquivo = '../DEINFO_AB_FEIRASLIVRES_2014.csv'
-            reader = csv.DictReader(arquivo_csv, delimiter=',')
-            contador = 0
-            feiras_importadas = []
-            for collumn in reader:
-                feira = Feira(
-                    registro=collumn["REGISTRO"],
-                    nome=collumn["NOME_FEIRA"],
-                    distrito=collumn["DISTRITO"],
-                    regiao=collumn["REGIAO5"],
-                    logradouro=collumn["LOGRADOURO"],
-                    numero=collumn["NUMERO"],
-                    bairro=collumn["BAIRRO"],
-                    referencia=collumn["REFERENCIA"],
-                )
-                feiras_importadas.append(feira)
-                contador += 1
-            
-            db.session.bulk_save_objects(feiras_importadas)
-            db.session.commit()
-            
-            return f'Foram importadas {contador} feira do arquivo {arquivo}'
+    with open(arquivo, "r") as arquivo_csv:
+        # arquivo = '../DEINFO_AB_FEIRASLIVRES_2014.csv'
+        reader = csv.DictReader(arquivo_csv, delimiter=",")
+        contador = 0
+        feiras_importadas = []
+        for collumn in reader:
+            feira = Feira(
+                registro=collumn["REGISTRO"],
+                nome=collumn["NOME_FEIRA"],
+                distrito=collumn["DISTRITO"],
+                regiao=collumn["REGIAO5"],
+                logradouro=collumn["LOGRADOURO"],
+                numero=collumn["NUMERO"],
+                bairro=collumn["BAIRRO"],
+                referencia=collumn["REFERENCIA"],
+            )
+            feiras_importadas.append(feira)
+            contador += 1
+
+        db.session.bulk_save_objects(feiras_importadas)
+        db.session.commit()
+
+        return f"Foram importadas {contador} feira do arquivo {arquivo}"
