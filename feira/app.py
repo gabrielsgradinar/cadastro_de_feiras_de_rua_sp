@@ -1,15 +1,15 @@
 from flask import Flask
-import view
-import db
-import linha_de_comando
-import erros
+import feira.view
+import feira.db
+import feira.linha_de_comando
+import feira.erros
 
 
 def create_app():
     app = Flask(__name__)
-    erros.init_app(app)
-    view.init_app(app)
-    db.init_app(app)
-    linha_de_comando.init_app(app)
+    feira.erros.init_app(app)
+    feira.view.init_app(app)
+    feira.db.init_app(app)
+    feira.linha_de_comando.init_app(app)
 
     return app

@@ -3,4 +3,5 @@ flask-sqlalchemy
 pytest
 pytest-flask
 pytest-cov
+pytest-flask-sqlalchemy
 black

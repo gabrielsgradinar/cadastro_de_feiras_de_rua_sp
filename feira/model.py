@@ -1,4 +1,4 @@
-from db import db
+from feira.db import db
 from dataclasses import dataclass
 
 

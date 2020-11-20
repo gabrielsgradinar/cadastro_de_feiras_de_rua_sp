@@ -9,3 +9,9 @@ install:
 
 init_db:
 	FLASK_APP=feira/app.py flask create-db
+
+import:
+	FLASK_APP=feira/app.py flask import-csv
+
+test:
+	FLASK_ENV=test pytest tests/ -v --cov=feira

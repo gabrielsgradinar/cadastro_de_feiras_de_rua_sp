@@ -1,11 +1,15 @@
 from werkzeug.exceptions import BadRequest
 from sqlalchemy import or_
-from model import Feira
-from db import db
+from feira.model import Feira
+from feira.db import db
 import csv
 
 
 def criar_feira(feira: Feira):
+
+    if feira is None:
+        raise BadRequest("Nenhum valor passado para criar uma feira")
+
     registro_existe = Feira.query.filter(
         Feira.registro == feira["registro"]
     ).first()
@@ -41,21 +45,21 @@ def listar_todas_as_feiras():
 
 def listar_feiras_por_filtro(filtros: dict):
 
-    filtros_para_query = {
-        "distrito": filtros["distrito"]
-        if "distrito" in filtros.keys()
-        else "",
-        "regiao": filtros["regiao"] if "regiao" in filtros.keys() else "",
-        "nome": filtros["nome"] if "nome" in filtros.keys() else "",
-        "bairro": filtros["bairro"] if "bairro" in filtros.keys() else "",
-    }
+    filtros_para_query = []
+
+    for chave, valor in filtros.items():
+        if chave == "distrito" and valor != "":
+            filtros_para_query.append(Feira.distrito == valor)
+        if chave == "nome" and valor != "":
+            filtros_para_query.append(Feira.nome == valor)
+        if chave == "regiao" and valor != "":
+            filtros_para_query.append(Feira.regiao == valor)
+        if chave == "bairro" and valor != "":
+            filtros_para_query.append(Feira.bairro == valor)
 
     feiras = Feira.query.filter(
         or_(
-            Feira.distrito == filtros_para_query["distrito"],
-            Feira.nome == filtros_para_query["nome"],
-            Feira.regiao == filtros_para_query["regiao"],
-            Feira.bairro == filtros_para_query["bairro"],
+            *filtros_para_query
         )
     ).all()
 
@@ -75,7 +79,6 @@ def excluir_feira(registro: str):
     except Exception as e:
         db.session.rollback()
         return e
-
 
 def atualizar_feira(feira: dict, registro: str):
     for chave in feira.keys():
@@ -116,4 +119,4 @@ def importar_csv(arquivo):
         db.session.bulk_save_objects(feiras_importadas)
         db.session.commit()
 
-        return f"Foram importadas {contador} feira do arquivo {arquivo}"
+        return f"Foram importadas {contador} feiras do arquivo {arquivo}"
