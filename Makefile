@@ -8,10 +8,10 @@ install:
 	pip install -r requirements.txt
 
 init_db:
-	FLASK_APP=feira/app.py flask create-db
+	FLASK_APP=feira/app.py flask feira create_db
 
 import:
-	FLASK_APP=feira/app.py flask import-csv
+	FLASK_APP=feira/app.py flask feira import_csv
 
 test:
-	FLASK_ENV=test pytest tests/ -v --cov=feira
+	FLASK_ENV=test pytest tests/ -v --cov-report html --cov=feira

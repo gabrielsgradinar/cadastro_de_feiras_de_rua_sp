@@ -10,7 +10,9 @@ def handle_error(error):
     mensagem = error.description
     status_code = error.code
     response = {"erro": {"mensagem": mensagem}}
-    logger.info(f"{request.method} - '{request.path}' - '{error.code}'")
+    logger.info(
+        f"{request.method} - '{request.path}' - '{Response(status=error.code).status}'"
+    )
     return jsonify(response), status_code
 
 

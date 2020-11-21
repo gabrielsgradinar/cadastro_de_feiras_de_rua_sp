@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, Response
-from feira.controller import atualizar_feira, criar_feira, excluir_feira, listar_todas_as_feiras, listar_feiras_por_filtro
+from feira.mvc.controller import atualizar_feira, criar_feira, excluir_feira, listar_todas_as_feiras, listar_feiras_por_filtro
 from feira.log import logger
 
 feira = Blueprint(
@@ -10,7 +10,7 @@ feira = Blueprint(
 @feira.route("/")
 def ola_mb():    
     logger.info(f"{request.method} - '{request.path}' - '{Response().status}'")
-    return {"message": "Hello Mercado Bitcon !"}
+    return {"mensagem": "Hello Mercado Bitcon !"}
 
 
 @feira.route("/feiras", methods=["GET"])
@@ -40,9 +40,9 @@ def feiras():
 
 @feira.route("/feira", methods=["POST"])
 def cria_feira():
-    logger.info(f"{request.method} - '{request.path}' - '{Response().status}'")
+    logger.info(f"{request.method} - '{request.path}' - '{Response(status=201).status}'")
     feira = request.get_json()
-    return jsonify(criar_feira(feira))
+    return jsonify(criar_feira(feira)), 201
 
 
 @feira.route("/feira/<registro>", methods=["PUT"])
@@ -54,8 +54,9 @@ def atualiza_feira(registro):
 
 @feira.route("/feira/<registro>", methods=["DELETE"])
 def exclui_feira(registro):
-    logger.info(f"{request.method} - '{request.path}' - '{Response().status}'")
-    return jsonify(excluir_feira(registro))
+    logger.info(f"{request.method} - '{request.path}' - '{Response(status=204).status}'")
+    jsonify(excluir_feira(registro))
+    return Response(status=204, mimetype="application/json")
 
 
 def init_app(app):
