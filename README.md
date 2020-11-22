@@ -6,13 +6,8 @@ Na raiz do projeto existe o arquivo **Makefile** com comandos para realizar algu
 * make init_db -> cria o banco de dados **SQLite**
 * make import -> executa o script para importação dos dados do arquivo csv
 * make format -> formata o código usando a biblioteca **black**
-* make run-dev -> executa a aplicação iniciando o servidor do **Flask**
 * make test -> Executa os testes com o pytest (**Ao executar os testes sera criado a pasta htmlcov com as informações de cobertura dos testes**)
-
-### Para executar o projeto corretamente, execute os comandos nessa ordem:
-1. make init_db
-2. make import (Esse comando não é obrigatório) 
-3. make run-dev
+* make run -> executa a aplicação iniciando o servidor do **Flask** e inicia o banco de dados
 
 ## Exemplos das requisições que podem ser feitas
 
