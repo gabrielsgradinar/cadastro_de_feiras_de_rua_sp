@@ -11,13 +11,13 @@ Na raiz do projeto existe o arquivo **Makefile** com comandos para realizar algu
 
 ## Exemplos das requisições que podem ser feitas
 
-* **Retorna todas as feiras:** GET /feiras/
+### **Retorna todas as feiras:** GET /feiras/
 
 Exemplo do retorno caso exista informações no banco de dados, caso não tenha retornará uma lista vazia.
 
 **Código:** 200 Ok
 
-```
+```json
 [
   {
     "bairro": "VL FORMOSA", 
@@ -49,7 +49,7 @@ Exemplo: /feiras?distrito=PENHA&nome=PRACA DO CERQUILHO
 
 **Código:** 200 Ok
 
-```
+```json
 [
   {
     "bairro": "PENHA", 
@@ -65,10 +65,10 @@ Exemplo: /feiras?distrito=PENHA&nome=PRACA DO CERQUILHO
 ]
 ```
 
-* **Cria uma feiras:** POST /feira
+### **Cria uma feiras:** POST /feira
 
 Exemplo de conteúdo para criar a feira:
-```
+```json
 {
     "registro": "1234-8",
     "nome": "Feira do Gabriel",
@@ -85,7 +85,7 @@ Exemplo de retorno no caso do cadastro correto:
 
 **Código:** 200 Ok
 
-```
+```json
 {
     "bairro": "PARQUE DAS NAÇÕES",
     "distrito": "SANTO ANDRÉ",
@@ -103,21 +103,21 @@ Exemplo de erro ao realizar cadastro e o campo número for uma string com caract
 
 **Código:** 400 Bad Request
 
-```
+```json
 {
     "erro": {
         "mensagem": "O numero deve ser vazio ou um número inteiro válido"
     }
 }
 ```
-* **Atualiza uma feira:** PUT /feira/:registro/
+### **Atualiza uma feira:** PUT /feira/:registro/
 
 A feira é atualizada utilizando o seu registro
 
 Exemplo de conteúdo para atualizar o nome de uma feira com o registro 
 
 **URL:** /feira/1234-9
-```
+```json
 {
     "nome": "Feira Bitcoin",
 }
@@ -127,7 +127,7 @@ Exemplo de retorno ao atualizar com sucesso:
 
 **Código:** 200 Ok
 
-```
+```json
 {
     "bairro": "PARQUE DAS NAÇÕES",
     "distrito": "SANTO ANDRÉ",
@@ -145,7 +145,7 @@ Exemplo de erro ao tentar atualizar uma feira que não existe:
 
 **Código:** 400 Bad Request
 
-```
+```json
 {
     "erro": {
         "mensagem": "Não existe nenhuma feira com esse registro"
@@ -153,7 +153,7 @@ Exemplo de erro ao tentar atualizar uma feira que não existe:
 }
 ```
 
-* **Excluir uma feira:** DELETE /feira/:registro/
+### **Excluir uma feira:** DELETE /feira/:registro/
 
 A feira é excluída utilizando o seu registro
 
@@ -165,7 +165,7 @@ Exemplo de retorno:
 
 **Código:** 204 No Content
 
-```
+```json
 {}
 ```
 
@@ -173,7 +173,7 @@ Exemplo de erro ao tentar excluír uma feira que não existe:
 
 **Código:** 400 Bad Request
 
-```
+```json
 {
     "erro": {
         "mensagem": "Não existe nenhuma feira com esse registro"
