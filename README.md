@@ -65,7 +65,7 @@ Exemplo: /feiras?distrito=PENHA&nome=PRACA DO CERQUILHO
 ]
 ```
 
-### **Cria uma feiras:** POST /feira
+### **Cria uma feira:** POST /feira
 
 Exemplo de conteúdo para criar a feira:
 ```json
