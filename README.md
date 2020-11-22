@@ -7,7 +7,7 @@ Na raiz do projeto existe o arquivo **Makefile** com comandos para realizar algu
 * make import -> executa o script para importação dos dados do arquivo csv
 * make format -> formata o código usando a biblioteca **black**
 * make run-dev -> executa a aplicação iniciando o servidor do **Flask**
-* make test -> Executa os testes com o pytest **Ao executar os testes sera criado a pasta htmlcov com as informações de cobertura dos testes**
+* make test -> Executa os testes com o pytest (**Ao executar os testes sera criado a pasta htmlcov com as informações de cobertura dos testes**)
 
 ### Para executar o projeto corretamente, execute os comandos nessa ordem:
 1. make init_db
@@ -16,11 +16,11 @@ Na raiz do projeto existe o arquivo **Makefile** com comandos para realizar algu
 
 ## Exemplos das requisições que podem ser feitas
 
-* Retorna todas as feiras : GET /feiras/
+* **Retorna todas as feiras:** GET /feiras/
 
 Exemplo do retorno caso exista informações no banco de dados, caso não tenha retornará uma lista vazia.
 
-Código: 200 Ok
+**Código:** 200 Ok
 
 ```
 [
@@ -52,7 +52,7 @@ Pode ser realizado a busca de feiras pelos campos distrito, nome, região e bair
 
 Exemplo: /feiras?distrito=PENHA&nome=PRACA DO CERQUILHO
 
-Código: 200 Ok
+**Código:** 200 Ok
 
 ```
 [
@@ -70,7 +70,7 @@ Código: 200 Ok
 ]
 ```
 
-* Cria uma feiras : POST /feira
+* **Cria uma feiras:** POST /feira
 
 Exemplo de conteúdo para criar a feira:
 ```
@@ -88,7 +88,7 @@ Exemplo de conteúdo para criar a feira:
 
 Exemplo de retorno no caso do cadastro correto:
 
-Código: 200 Ok
+**Código:** 200 Ok
 
 ```
 {
@@ -106,7 +106,7 @@ Código: 200 Ok
 
 Exemplo de erro ao realizar cadastro e o campo número for uma string com caracteres diferentes de número:
 
-Código: 400 Bad Request
+**Código:** 400 Bad Request
 
 ```
 {
@@ -115,13 +115,13 @@ Código: 400 Bad Request
     }
 }
 ```
-* Atualiza uma feira : PUT /feira/:registro/
+* **Atualiza uma feira:** PUT /feira/:registro/
 
 A feira é atualizada utilizando o seu registro
 
 Exemplo de conteúdo para atualizar o nome de uma feira com o registro 
 
-URL: /feira/1234-9
+**URL:** /feira/1234-9
 ```
 {
     "nome": "Feira Bitcoin",
@@ -130,7 +130,7 @@ URL: /feira/1234-9
 
 Exemplo de retorno ao atualizar com sucesso:
 
-Código: 200 Ok
+**Código:** 200 Ok
 
 ```
 {
@@ -148,7 +148,7 @@ Código: 200 Ok
 
 Exemplo de erro ao tentar atualizar uma feira que não existe:
 
-Código: 400 Bad Request
+**Código:** 400 Bad Request
 
 ```
 {
@@ -158,17 +158,17 @@ Código: 400 Bad Request
 }
 ```
 
-* Excluir uma feira : DELETE /feira/:registro/
+* **Excluir uma feira:** DELETE /feira/:registro/
 
 A feira é excluída utilizando o seu registro
 
 Exemplo de retorno ao realizar a exclusão:
 
-URL: /feira/1234-9
+**URL:** /feira/1234-9
 
 Exemplo de retorno:
 
-Código: 204 No Content
+**Código:** 204 No Content
 
 ```
 {}
@@ -176,7 +176,7 @@ Código: 204 No Content
 
 Exemplo de erro ao tentar excluír uma feira que não existe:
 
-Código: 400 Bad Request
+**Código:** 400 Bad Request
 
 ```
 {
