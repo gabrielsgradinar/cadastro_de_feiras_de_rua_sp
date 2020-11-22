@@ -1,13 +1,19 @@
 # Desafio Mercado Bitcoin
 
-## Instalação das dependencia para execução do projeto e testes
+A API foi desenvolvida usando o framework Flask e a biclioteca SQLAlchemy para a criação dos modelos do banco de dados e sua manipulaçã, para a criação e execução dos testes foi utilizado o Pytest.
+
 Na raiz do projeto existe o arquivo **Makefile** com comandos para realizar algumas ações no projeto, os comando devem ser executados dentro da pasta raiz. Os comando são:
-* make install -> instala as dependências e bibliotecas utilizadas no projeto
-* make init_db -> cria o banco de dados **SQLite**
-* make import -> executa o script para importação dos dados do arquivo csv
+
+## Instalação das dependencia para execução do projeto e testes
+* make install
+## Importação dos dados do arquivo csv para o banco de dados
+* make import -> executa o script de linha de comando **flask feira import_csv** para importar os dados do csv
+## Formatação do código
 * make format -> formata o código usando a biblioteca **black**
+## Execução dos testes
 * make test -> Executa os testes com o pytest (**Ao executar os testes sera criado a pasta htmlcov com as informações de cobertura dos testes**)
-* make run -> executa a aplicação iniciando o servidor do **Flask** e inicia o banco de dados
+# Execução do projeto
+* make run -> executa a aplicação iniciando o servidor do **Flask** e executa o script **make init_db** para a criação do banco de dados
 
 ## Exemplos das requisições que podem ser feitas
 
