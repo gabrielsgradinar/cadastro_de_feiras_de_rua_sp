@@ -1,4 +1,4 @@
-# Desafio Mercado Bitcoin
+# Desafio
 
 A API foi desenvolvida usando o framework Flask e a biclioteca SQLAlchemy para a criação dos modelos do banco de dados e sua manipulaçã, para a criação e execução dos testes foi utilizado o Pytest.
 
